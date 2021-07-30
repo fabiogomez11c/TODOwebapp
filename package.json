@@ -1,0 +1,35 @@
+{
+  "name": "todowebapp",
+  "version": "1.0.0",
+  "description": "TODO app created with Javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack serve --config webpack.config.js --open --port=8080"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabiogomez11c/TODOwebapp.git"
+  },
+  "keywords": [
+    "todo"
+  ],
+  "author": "Fabio Gomez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fabiogomez11c/TODOwebapp/issues"
+  },
+  "homepage": "https://github.com/fabiogomez11c/TODOwebapp#readme",
+  "devDependencies": {
+    "copy-webpack-plugin": "^9.0.1",
+    "css-loader": "^6.2.0",
+    "file-loader": "^6.2.0",
+    "html-loader": "^2.1.2",
+    "html-webpack-plugin": "^5.3.2",
+    "style-loader": "^3.2.1",
+    "webpack": "^5.47.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
