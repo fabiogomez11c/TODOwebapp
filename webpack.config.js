@@ -1,5 +1,6 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin')
-const CopyPlugin        = require('copy-webpack-plugin')
+const HtmlWebPackPlugin    = require('html-webpack-plugin')
+const CopyPlugin           = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: 'development',
@@ -11,19 +12,28 @@ module.exports = {
     module : {
         rules : [
             {
-                test: /\.html$/,
+                test: /\.html$/i,
                 loader: 'html-loader',
                 options: {
                     sources: false
                 }
             },
             {
-                test: /\.css$/,
+                test: /\.css$/i,
+                exclude: /style.css$/,
                 use: ['style-loader', 'css-loader']
             },
             {
-                test: /\.(png|jpg|svg)$/,
-                loader: 'file-loader'
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
+            },
+            {
+                test: /\.(png|jpg|svg)$/i,
+                use: [
+                    {
+                        loader: 'file-loader'
+                    }
+                ]
             },
             {
                 test: /\.js$/,
@@ -44,6 +54,11 @@ module.exports = {
             patterns: [
                 {from: 'src/assets/', to: 'assets/'}
             ]
+        }),
+
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            ignoreOrder: false
         })
     ]
 }

@@ -1,10 +1,13 @@
 import './css/style.css'
+// import checkboxlogo from './assets/nochecked.svg'
 
 // position variables
 let pos1 = 0,
     pos2 = 0,
     pos3 = 0,
     pos4 = 0;
+
+// console.log(checkboxlogo)
 
 // html elements
 let todoElement = document.querySelector(".todo__title");
