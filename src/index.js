@@ -1,13 +1,11 @@
 import './css/style.css'
-// import checkboxlogo from './assets/nochecked.svg'
 
+// movement.js
 // position variables
 let pos1 = 0,
     pos2 = 0,
     pos3 = 0,
     pos4 = 0;
-
-// console.log(checkboxlogo)
 
 // html elements
 let todoElement = document.querySelector(".todo__title");
@@ -48,5 +46,49 @@ const dragMouse = (elmnt) => {
 
     }
 }
+// ------
 
-dragMouse(todoElement)
+// tasks.js
+
+class Todo {
+
+    constructor(task){
+        this.task      = task;
+        this.id        = new Date().getTime();
+        this.completed = false;
+    }
+
+    createHTML () {
+
+        return null;
+    }
+
+}
+
+class TodoList {
+
+    constructor() {
+        this.todos = [];
+    }
+
+    newTodo (todo) {
+        this.todos.push(todo);
+    }
+
+}
+
+const newTodoHTML = () => {
+
+    return null;
+}
+
+// -----
+
+
+// index.js
+dragMouse(todoElement);
+
+// Creates a new todo at the beginning
+const list_object = new TodoList();
+
+// -----
