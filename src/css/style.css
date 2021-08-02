@@ -145,8 +145,36 @@ h1 {
     height: auto;
     cursor: pointer;
     opacity: 40%;
+    transition: 0.25s;
 }
 
 .todo .todo__list .todo__list--input--li-box:hover {
     opacity: 60%;
+}
+
+.todo .todo__buttons {
+    position: relative;
+    bottom: 8px;
+    margin: 0;
+}
+
+.todo .todo__buttons button {
+    background: var(--hard-blue);
+    border-radius: 10px;
+    height: 35px;
+    width: 140px;
+    color: white;
+    box-shadow: 0px 4px 4px #00000040;
+    border-style: hidden;
+    opacity: 90%;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.todo .todo__buttons button:hover {
+    opacity: 100%;
+}
+
+.todo .todo__buttons button:active {
+    opacity: 25%;
 }
