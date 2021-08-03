@@ -11,7 +11,7 @@ let pos1 = 0,
 let todoElement = document.querySelector(".todo__title");
 
 // functions
-const dragMouse = (elmnt) => {
+const dragMouse = (elmnt, move_parent=true) => {
     /*
     moves a parent element after selecting the specified child
     */
@@ -32,8 +32,13 @@ const dragMouse = (elmnt) => {
             pos4 = eventObject.clientY;
 
             // relocate the parent
-            elmnt.parentElement.style.top = (elmnt.parentElement.offsetTop - pos2) + "px";
-            elmnt.parentElement.style.left = (elmnt.parentElement.offsetLeft - pos1) + "px";
+            if (move_parent){
+                elmnt.parentElement.style.top  = (elmnt.parentElement.offsetTop - pos2) + "px";
+                elmnt.parentElement.style.left = (elmnt.parentElement.offsetLeft - pos1) + "px";
+            } else {
+                elmnt.style.top  = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
 
             }
 
@@ -50,6 +55,7 @@ const dragMouse = (elmnt) => {
 
 // tasks.js
 
+const bodyElmnt   = document.querySelector("body")
 const todoListDiv = document.querySelector(".todo__list");
 const doneBtn     = document.querySelector(".todo__buttons--done");
 const allBtn      = document.querySelector(".todo__buttons--all");
@@ -113,8 +119,8 @@ class TodoList {
         temp_completed.forEach((x) => temp_ids.push(x.id));
 
         for (let i = todoListDiv.children.length-1; i >= 0; i--){
-            const temp_todo = todoListDiv.children[i];
-            const id_       = parseFloat(temp_todo.getAttribute("todo-id"));
+            let temp_todo = todoListDiv.children[i];
+            let id_       = parseFloat(temp_todo.getAttribute("todo-id"));
             if (temp_ids.includes(id_)){
                 todoListDiv.removeChild(temp_todo);
             }
@@ -183,12 +189,88 @@ allBtn.addEventListener('click', (event) => {
 
 // -----
 
+// notes.js
+
+class NoteList {
+
+    constructor () {
+        this.notes = []
+    }
+
+    newNote (note) {
+        this.notes.push(note)
+    }
+
+}
+
+class Snote {
+
+    static newSnote () {
+        new Snote();
+    }
+
+    constructor () {
+        this.id = new Date().getTime();
+
+        this.createHTML();
+        this.createListener();
+    }
+
+    createListener () {
+        // movement
+        const note     = document.querySelector(`div[note-id="${this.id}"]`);
+        dragMouse(note.firstElementChild);
+
+        // create new note
+        console.log(note.firstElementChild.children[0]);
+        note.firstElementChild.children[0].addEventListener('click', (event) => {
+            Snote.newSnote();
+        })
+
+        // delete the note
+        note.firstElementChild.children[1].addEventListener('click', (event) => {
+            bodyElmnt.removeChild(note);
+        })
+    }
+
+    createHTML () {
+
+        const htmlTodo = `
+        <div class="notes" note-id="${this.id}">
+            <div class="notes__icons">
+                <img src="/src/assets/plus.svg" alt="" class="notes__icons--new">
+                <img src="/src/assets/x.svg" alt="" class="notes__icons--close">
+            </div>
+            <div class="notes__input">
+                <!-- <input type="text" class="notes__input--text" placeholder="Type your note here!"> -->
+                <textarea class="notes__input--text" placeholder="Type your note here!"></textarea>
+            </div>
+        </div>
+        `
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlTodo;
+
+        bodyElmnt.append(tempDiv.firstElementChild);
+    }
+
+    deleteNote () {
+
+    }
+}
+
+
+// ----
+
 
 // index.js
 dragMouse(todoElement);
 
 // Creates a new todo at the beginning
 const list_object = new TodoList();
+const list_notes  = new NoteList();
+
 list_object.newTodo(new Todo());
+list_notes.newNote(new Snote());
 
 // -----
