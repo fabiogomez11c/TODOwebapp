@@ -212,12 +212,12 @@ h1 {
     cursor: pointer;
 }
 
-.notes .notes__icons img:active {
-    opacity: 25%;
+.notes .notes__icons img:hover {
+    opacity: 70%;
 }
 
-.notes .notes__icons img:hover {
-
+.notes .notes__icons img:active {
+    opacity: 25%;
 }
 
 .notes .notes__input {
