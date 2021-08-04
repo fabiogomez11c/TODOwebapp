@@ -1,5 +1,4 @@
 import './css/style.css'
-import './assets/clockbackground.png'
 
 // movement.js
 // position variables
@@ -77,7 +76,7 @@ class Todo {
         <div class="todo__list--li" todo-id="${this.id}">
 
             <span>
-                <img src="/src/assets/nochecked.svg" alt="" class="todo__list--input--li-box">
+                <img src="./assets/nochecked.svg" alt="" class="todo__list--input--li-box">
             </span>
             <input class="todo__list--input--li-input" type="text" placeholder="Add a new task and press Enter!">
             
@@ -226,8 +225,8 @@ class Snote {
         const htmlTodo = `
         <div class="notes" note-id="${this.id}">
             <div class="notes__icons">
-                <img src="/src/assets/plus.svg" alt="" class="notes__icons--new">
-                <img src="/src/assets/x.svg" alt="" class="notes__icons--close">
+                <img src="./assets/plus.svg" alt="" class="notes__icons--new">
+                <img src="./assets/x.svg" alt="" class="notes__icons--close">
             </div>
             <div class="notes__input">
                 <!-- <input type="text" class="notes__input--text" placeholder="Type your note here!"> -->
