@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
+    "build": "webpack --config webpack.prod.js",
+    "build:dev": "webpack --config webpack.config.js",
     "start": "webpack serve --config webpack.config.js --open --port=8080"
   },
   "repository": {
@@ -22,8 +23,12 @@
   },
   "homepage": "https://github.com/fabiogomez11c/TODOwebapp#readme",
   "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/preset-env": "^7.14.9",
+    "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.2.0",
+    "css-minimizer-webpack-plugin": "^3.0.2",
     "file-loader": "^6.2.0",
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.2",
@@ -31,6 +36,7 @@
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.2.1",
     "svg-inline-loader": "^0.8.2",
+    "terser-webpack-plugin": "^5.1.4",
     "url-loader": "^4.1.1",
     "webpack": "^5.47.1",
     "webpack-cli": "^4.7.2",
