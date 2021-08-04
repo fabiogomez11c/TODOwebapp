@@ -190,19 +190,6 @@ allBtn.addEventListener('click', (event) => {
 // -----
 
 // notes.js
-
-class NoteList {
-
-    constructor () {
-        this.notes = []
-    }
-
-    newNote (note) {
-        this.notes.push(note)
-    }
-
-}
-
 class Snote {
 
     static newSnote () {
@@ -222,7 +209,6 @@ class Snote {
         dragMouse(note.firstElementChild);
 
         // create new note
-        console.log(note.firstElementChild.children[0]);
         note.firstElementChild.children[0].addEventListener('click', (event) => {
             Snote.newSnote();
         })
@@ -258,9 +244,13 @@ class Snote {
 
     }
 }
-
-
 // ----
+
+
+// timer.js
+
+
+// -----
 
 
 // index.js
@@ -268,9 +258,8 @@ dragMouse(todoElement);
 
 // Creates a new todo at the beginning
 const list_object = new TodoList();
-const list_notes  = new NoteList();
 
 list_object.newTodo(new Todo());
-list_notes.newNote(new Snote());
+new Snote();
 
 // -----
