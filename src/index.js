@@ -253,7 +253,8 @@ class Snote {
 class webClock {
 
     constructor() {
-        this.input = [0,0,0,0,0,0];
+        this.input         = [0,0,0,0,0,0];
+        this.intervalTimer = null;
         this.createListeners();
     }
 
@@ -295,18 +296,85 @@ class webClock {
     getFutureTime () {
         // clean the input
         const hours   = parseFloat(
-            toString(this.input[0]) + toString(this.input[1])) * 3600 * 1000;
+            String(this.input[0]) + String(this.input[1])) * 3600 * 1000;
         const minutes = parseFloat(
-            toString(this.input[2]) + toString(this.input[3])) * 60 * 1000;
+            String(this.input[2]) + String(this.input[3])) * 60 * 1000;
         const seconds = parseFloat(
-            toString(this.input[4]) + toString(this.input[5])) * 1000;
+            String(this.input[4]) + String(this.input[5])) * 1000;
         
         const totalDiff = hours + minutes + seconds;
 
         const nowDate   = new Date().getTime();
         return new Date(nowDate + totalDiff);
     }
+
+    start() {
+        // prevents starting without any setup
+        if (this.input.reduce((acc, curr) => acc + curr) === 0){
+            return null
+        }
+
+        const timerNumber = document.querySelectorAll(".numbers img");
+
+        const futureDate = this.getFutureTime()
+
+        this.intervalTimer = setInterval(() => {
+            const nowDate  = new Date()
+            const diffTime = futureDate - nowDate
+
+            const numbers    = []
+            const newNumbers = []
+            numbers.push(Math.floor((diffTime % (1000*60*60*24))/(1000*60*60)))
+            numbers.push(Math.floor((diffTime%(1000*60*60))/(1000*60)))
+            numbers.push(Math.floor((diffTime%(1000*60))/1000))
+            // console.log(numbers)
+            for (let i of numbers){
+                if (Math.floor(i/10) === 0) {
+                    newNumbers.push("0")
+                    newNumbers.push(String(i))
+                } else {
+                    newNumbers.push(String(i)[0])
+                    newNumbers.push(String(i)[1])
+                }
+            }
+            // console.log(newNumbers)
+            for (let i = 0; i < newNumbers.length; i++) {
+                this.input[i] = newNumbers[i]
+                timerNumber[i].src = `./assets/${this.input[i]}.jpg`
+            }
+
+        }, 1000);
+    }
+
+    stop() {
+        clearInterval(this.intervalTimer)
+        this.intervalTimer = null
+    }
+    
+    reset() {
+        if (this.intervalTimer === null){
+            this.input = [0,0,0,0,0,0]
+            const timerNumber = document.querySelectorAll(".numbers img");
+            for (let i of timerNumber) {
+                i.src = `./assets/0.jpg`
+            }
+        }
+    }
 }
+
+const startBtn = document.querySelector(".timer__buttons--start");
+const stopBtn  = document.querySelector(".timer__buttons--stop");
+const resetBtn = document.querySelector(".timer__buttons--reset");
+
+startBtn.addEventListener('click', (event) => {
+    clockObject.start();
+})
+stopBtn.addEventListener('click', (event) => {
+    clockObject.stop();
+})
+resetBtn.addEventListener('click', (event) => {
+    clockObject.reset();
+})
 
 // -----
 
@@ -321,5 +389,11 @@ const clockObject = new webClock();
 
 list_object.newTodo(new Todo());
 new Snote();
+
+const oldDate = new Date()
+const newDate = new Date(oldDate.getTime() + 100000)
+// console.log(oldDate)
+// console.log(newDate)
+// console.log(newDate - oldDate)
 
 // -----
