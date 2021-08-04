@@ -318,8 +318,13 @@ class webClock {
         const futureDate = this.getFutureTime()
 
         this.intervalTimer = setInterval(() => {
+
             const nowDate  = new Date()
             const diffTime = futureDate - nowDate
+
+            if (diffTime <= 1000){
+                this.stop()
+            }
 
             const numbers    = []
             const newNumbers = []
@@ -341,6 +346,7 @@ class webClock {
                 this.input[i] = newNumbers[i]
                 timerNumber[i].src = `./assets/${this.input[i]}.jpg`
             }
+
 
         }, 1000);
     }
