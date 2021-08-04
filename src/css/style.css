@@ -301,6 +301,10 @@ h1 {
     opacity: 35%;
 }
 
+.timer .timer__clock .timer__clock--timer .numbers {
+    display: flex;
+}
+
 .timer .timer__clock .timer__clock--timer .numbers img {
     width: 25px;
     height: auto;

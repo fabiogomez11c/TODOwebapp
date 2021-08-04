@@ -1,4 +1,5 @@
 import './css/style.css'
+import './assets/clockbackground.png'
 
 // movement.js
 // position variables
@@ -8,7 +9,8 @@ let pos1 = 0,
     pos4 = 0;
 
 // html elements
-let todoElement = document.querySelector(".todo__title");
+let todoElement  = document.querySelector(".todo__title");
+let timerElement = document.querySelector(".timer__title");
 
 // functions
 const dragMouse = (elmnt, move_parent=true) => {
@@ -248,16 +250,74 @@ class Snote {
 
 
 // timer.js
+class webClock {
 
+    constructor() {
+        this.input = [0,0,0,0,0,0];
+        this.createListeners();
+    }
+
+    createListeners () {
+        const updownBtns  = document.querySelectorAll(".updown-buttons img");
+        const timerNumber = document.querySelectorAll(".numbers img");
+
+        for (let i = updownBtns.length - 1; i > -1; i--) {
+            updownBtns[i].addEventListener('click', (event) => {
+                if (i%2 !== 0) {
+                    this.input[i]++
+                    if (this.input[i] > 9) {
+                        this.input[i] = 0
+                        this.input[i - 1]++
+                        if (this.input[i - 1] > 5) {
+                            this.input[i] = 0
+                            this.input[i - 1] = 0
+                        }
+                    }
+                    timerNumber[i].src = `./assets/${this.input[i]}.jpg`
+                    timerNumber[i - 1].src = `./assets/${this.input[i - 1]}.jpg`
+                } else {
+                    this.input[i + 1]--
+                    if (this.input[i + 1] < 0) {
+                        this.input[i + 1] = 9
+                        this.input[i]--
+                        if (this.input[i] < 0) {
+                            this.input[i + 1] = 9
+                            this.input[i] = 5
+                        }
+                    }
+                    timerNumber[i + 1].src = `./assets/${this.input[i + 1]}.jpg`
+                    timerNumber[i].src = `./assets/${this.input[i]}.jpg`
+                }
+            })
+        }
+    }
+
+    getFutureTime () {
+        // clean the input
+        const hours   = parseFloat(
+            toString(this.input[0]) + toString(this.input[1])) * 3600 * 1000;
+        const minutes = parseFloat(
+            toString(this.input[2]) + toString(this.input[3])) * 60 * 1000;
+        const seconds = parseFloat(
+            toString(this.input[4]) + toString(this.input[5])) * 1000;
+        
+        const totalDiff = hours + minutes + seconds;
+
+        const nowDate   = new Date().getTime();
+        return new Date(nowDate + totalDiff);
+    }
+}
 
 // -----
 
 
 // index.js
 dragMouse(todoElement);
+dragMouse(timerElement);
 
 // Creates a new todo at the beginning
 const list_object = new TodoList();
+const clockObject = new webClock();
 
 list_object.newTodo(new Todo());
 new Snote();
